@@ -25,12 +25,12 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
-        name: 'Workspace',
-        path: '/workspace',
-        component: () => import('#/views/dashboard/workspace/index.vue'),
+        name: 'ProjectZaijian',
+        path: '/zijian',
+        component: () => import('#/views/dashboard/zaijian/index.vue'),
         meta: {
           icon: 'carbon:workspace',
-          title: $t('page.dashboard.workspace'),
+          title: '在建项目',
         },
       },
     ],
