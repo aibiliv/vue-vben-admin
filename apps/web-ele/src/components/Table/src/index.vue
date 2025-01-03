@@ -174,7 +174,7 @@ export default defineComponent({
     lazy: { type: Boolean, default: false }
   },
   setup(props: any, { attrs, slots, expose, emit }) {
-    let maxHeight = ref<string | number>("500px");
+    let maxHeight = ref<string | number>("580px");
     let key = ref(1);
     let computedSize = ref<any>("default");
     const table = ref();
@@ -251,7 +251,7 @@ export default defineComponent({
         const entry = entries[0];
         if (entry) {
           const { contentRect } = entry;
-          maxHeight.value = contentRect.height - 100;
+          maxHeight.value = contentRect.height - 80;
         }
       });
       //@ts-ignore

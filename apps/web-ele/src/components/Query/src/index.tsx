@@ -1,12 +1,12 @@
-import { ElButton, ElCol, ElForm, ElRow, ElSpace } from "element-plus";
-import { defineComponent, ref, type PropType } from "vue";
+import { ElButton, ElCol, ElForm, ElRow, ElSpace } from 'element-plus';
+import { defineComponent, ref, type PropType } from 'vue';
 
 export default defineComponent({
-  name: "Query",
+  name: 'Query',
   props: {
     onSearch: { type: Function as PropType<Function> },
     onReset: { type: Function as PropType<Function> },
-    labelWidth: { type: Number, default: 70 }
+    labelWidth: { type: Number, default: 70 },
   },
   setup(props, { slots, emit }) {
     const count = slots.default ? slots.default().length : 0;
@@ -23,12 +23,12 @@ export default defineComponent({
             <ElCol span={20}>
               <div
                 style={{
-                  display: "grid",
+                  display: 'grid',
                   gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-                  gridColumnGap: "16px",
-                  gridRowGap: "16px",
-                  height: fold.value ? "32px" : "auto",
-                  overflow: "hidden"
+                  gridColumnGap: '16px',
+                  gridRowGap: '16px',
+                  height: fold.value ? '32px' : 'auto',
+                  overflow: 'hidden',
                 }}
               >
                 {slots.default ? slots.default() : null}
@@ -37,25 +37,18 @@ export default defineComponent({
             <ElCol span={4}>
               <ElSpace>
                 {props.onSearch && (
-                  <ElButton type="primary" onClick={() => emit("search")}>
+                  <ElButton type="primary" onClick={() => emit('search')}>
                     查询
                   </ElButton>
                 )}
                 {props.onReset && (
-                  <ElButton
-                    type="default"
-                    onClick={() => emit("reset")}
-                  >
+                  <ElButton type="default" onClick={() => emit('reset')}>
                     重置
                   </ElButton>
                 )}
                 {count > 4 && (
-                  <ElButton
-                    type="primary"
-                    link
-                    onClick={changeFold}
-                  >
-                    {fold.value ? "展开" : "收起"}
+                  <ElButton type="primary" link onClick={changeFold}>
+                    {fold.value ? '展开' : '收起'}
                   </ElButton>
                 )}
               </ElSpace>
@@ -72,20 +65,27 @@ export default defineComponent({
               padding: 20px;
               .el-form {
                 width: 100%;
-                .el-form__item {
+                .el-form-item {
                   margin-right: 0;
+                  margin-bottom: 0;
                 }
-              }
-              .el-form__label {
-                padding-right: 12px;
-              }
-              .el-input, .el-select {
-                width: 100%;
+                .el-form-item__label {
+                  padding-right: 0;
+                  margin-right: -1px;
+                  background-color: var(--el-fill-color-light);
+                  justify-content: center;
+                  align-items: center;
+                  border: 1px solid #ebeef5;
+                  border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
+                }
+                .el-input, .el-select {
+                  width: 100%;
+                }
               }
             }
           `}
         </style>
       </ElRow>
     );
-  }
+  },
 });

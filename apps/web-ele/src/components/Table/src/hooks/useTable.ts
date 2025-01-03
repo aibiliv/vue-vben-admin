@@ -1,6 +1,6 @@
-import { commonDel, commonGet } from "@/api/basic";
+import { commonDel, commonGet } from '@/api/basic';
 // import { DialogPlugin, MessagePlugin, type PageInfo } from "tdesign-vue-next";
-import { ref } from "vue";
+import { ref } from 'vue';
 
 //表格的钩子
 // api: 获取分页数据的api接口
@@ -22,7 +22,7 @@ export const useTable = (api: string) => {
       const queryData = {
         ...query.value,
         page: page.value.current,
-        limit: page.value.pageSize
+        limit: page.value.pageSize,
       };
       loading.value = true;
       const { success, data } = (await commonGet(api)(queryData)) as any;
@@ -51,7 +51,7 @@ export const useTable = (api: string) => {
   // };
 
   //切换分页
-  const pageChange = curr => {
+  const pageChange = (curr) => {
     page.value = { ...page.value, ...curr };
     getData();
   };
@@ -78,7 +78,7 @@ export const useTable = (api: string) => {
     pageChange,
     getData,
     search,
-    reset
+    reset,
     // deleteRow
   };
 };

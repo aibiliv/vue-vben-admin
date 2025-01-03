@@ -1,2 +1,2 @@
-import Query from "./src/index";
+import Query from './src/index';
 export default Query;

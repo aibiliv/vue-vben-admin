@@ -4,10 +4,10 @@ export default defineComponent({
   name: "Page",
   props: {
   },
-  setup(props, ctx) {
+  setup(props, { slots }) {
     return () => (
       <div class="page-container">
-        {ctx.slots.default?.()}
+        {slots.default?.()}
         <style lang="scss" scoped>
           {`
             .page-container {
