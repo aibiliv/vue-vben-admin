@@ -12,19 +12,25 @@
           <slot name="rightBtns" />
           <span v-if="showSet" style="margin-left: 15px">
             <!-- 表格size -->
-            <ElDropdown trigger="click">
+            <el-dropdown trigger="click">
               <!-- <Elicon-histogram /> -->
               <span class="icon-[mdi--ab-testing]"></span>
               <template #dropdown>
-                <ElDropdownMenu>
-                  <ElDropdownItem @click="changeSize('default')">默认</ElDropdownItem>
-                  <ElDropdownItem @click="changeSize('large')">宽松</ElDropdownItem>
-                  <ElDropdownItem @click="changeSize('small')">紧凑</ElDropdownItem>
-                </ElDropdownMenu>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="changeSize('default')"
+                    >默认</el-dropdown-item
+                  >
+                  <el-dropdown-item @click="changeSize('large')"
+                    >宽松</el-dropdown-item
+                  >
+                  <el-dropdown-item @click="changeSize('small')"
+                    >紧凑</el-dropdown-item
+                  >
+                </el-dropdown-menu>
               </template>
-            </ElDropdown>
+            </el-dropdown>
             <!-- 设置表格列 -->
-            <ElPopover
+            <el-popover
               v-model="visible"
               placement="bottom"
               title="列展示 ( 可拖动 )"
@@ -47,10 +53,10 @@
                   <!-- <Elicon-setting slot="reference" /> -->
                 </span>
               </template>
-            </ElPopover>
+            </el-popover>
           </span>
           <!-- 导入和导出 -->
-          <!-- <Elupload
+          <!-- <el-upload
             style="display: inline-block; line-height: 16px"
             accept=".xls,.xlsx"
             :show-file-list="false"
@@ -74,25 +80,24 @@ import {
   defineProps,
   useAttrs,
   defineEmits,
-  nextTick
-} from "vue";
+  nextTick,
+} from 'vue';
 import TableColumnSetting from './TableColumnSetting.vue';
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElPopover } from "element-plus";
 
 const props = defineProps({
   isCanSetTableColumn: { type: Boolean, default: true },
   sectors: { type: Array, default: () => [] },
   tabs: { type: Array, default: () => [] },
   //是否显示设置面板
-  showSet: { type: Boolean, default: true }
+  showSet: { type: Boolean, default: true },
 });
 const attrs = useAttrs();
 const emit = defineEmits([
-  "update:size",
-  "changeSize",
-  "changeColumn",
-  "import",
-  "export"
+  'update:size',
+  'changeSize',
+  'changeColumn',
+  'import',
+  'export',
 ]);
 const visible = ref(false);
 
@@ -105,19 +110,19 @@ const computedSectors = computed(() => {
     return item;
   });
 });
-const changeSize = (size: string) => emit("update:size", size);
+const changeSize = (size: string) => emit('update:size', size);
 //列设置勾选
-const handleSelectionChange = (evt: Event) => emit("changeColumn", evt);
+const handleSelectionChange = (evt: Event) => emit('changeColumn', evt);
 // 导入
-const importHandle = (params: any) => emit("import", params);
+const importHandle = (params: any) => emit('import', params);
 // 导出
-const exportHandle = () => emit("export");
+const exportHandle = () => emit('export');
 </script>
 
 <style scoped lang="scss">
 .operation-panel {
   background: transparent;
-  padding-top: 10px;
+  padding: 16px 0 10px;
   border-bottom: 1px solid #eaeef6;
   // margin-bottom: 0px;
   border: none;

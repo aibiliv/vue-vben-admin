@@ -1,5 +1,5 @@
 <template>
-  <ElTableColumn
+  <el-table-column
     :label="item.label"
     :prop="item.prop"
     :fixed="item.fixed"
@@ -30,11 +30,10 @@
     >
       <slot :name="item.prop" :scope="scope" />
     </template>
-  </ElTableColumn>
+  </el-table-column>
 </template>
 <script lang="ts">
-import { computed, defineComponent, type PropType } from "vue";
-import { ElTableColumn } from "element-plus";
+import { computed, defineComponent, type PropType } from 'vue';
 
 interface TableColumn {
   label?: string;
@@ -59,28 +58,28 @@ interface Props {
 }
 
 export default defineComponent({
-  name: "ColumnItem",
-  components: {
-    ElTableColumn
-  },
+  name: 'ColumnItem',
   props: {
     item: { type: Object as PropType<any>, default: () => {} },
     resizable: { type: Boolean, default: false },
-    tableHeader: { type: Array as PropType<TableColumn[]>, default: () => [] }
+    tableHeader: { type: Array as PropType<TableColumn[]>, default: () => [] },
   },
 
   setup(props: Props, { slots }) {
     const visibleChildren = computed(
       () =>
-        props.item.children?.filter((child: TableColumn) => !child.hidden) ?? []
+        props.item.children?.filter((child: TableColumn) => !child.hidden) ??
+        [],
     );
     const shouldRenderChildren = computed(
-      () => visibleChildren.value.length > 0
+      () => visibleChildren.value.length > 0,
     );
-    const hasDefaultSlot = computed(() => !!slots[props.item.prop]);
+    const hasDefaultSlot = computed(() =>
+      props.item.prop ? !!slots[props.item.prop] : false,
+    );
     const getChildProps: any = (item: TableColumn) =>
       item.children
-        ?.flatMap(child => getChildProps(child))
+        ?.flatMap((child) => getChildProps(child))
         .concat(item.prop)
         .filter(Boolean);
 
@@ -89,8 +88,8 @@ export default defineComponent({
       visibleChildren,
       shouldRenderChildren,
       hasDefaultSlot,
-      getChildProps
+      getChildProps,
     };
-  }
+  },
 });
 </script>

@@ -1,5 +1,4 @@
 import { commonDel, commonGet } from '@/api/basic';
-// import { DialogPlugin, MessagePlugin, type PageInfo } from "tdesign-vue-next";
 import { ref } from 'vue';
 
 //表格的钩子

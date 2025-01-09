@@ -1,9 +1,8 @@
-import { defineComponent, ref, type PropType } from "vue";
+import { defineComponent, ref, type PropType } from 'vue';
 
 export default defineComponent({
-  name: "Page",
-  props: {
-  },
+  name: 'Page',
+  props: {},
   setup(props, { slots }) {
     return () => (
       <div class="page-container">
@@ -14,11 +13,11 @@ export default defineComponent({
               display: flex;
               flex-direction: column;
               height: 100%;
-              padding: 16px;
+              // padding: 16px;
             }
           `}
         </style>
       </div>
     );
-  }
+  },
 });

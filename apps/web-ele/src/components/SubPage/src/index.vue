@@ -1,34 +1,35 @@
 <template>
-  <ElCard class="detail" shadow="never">
+  <el-card class="detail" shadow="never">
     <template #header>
-      <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
         <div>
           <slot name="title">{{ title }}</slot>
         </div>
-        <ElButton type="primary" @click="goBack">
-          返回
-        </ElButton>
+        <el-button type="primary" @click="goBack"> 返回 </el-button>
       </div>
     </template>
     <slot></slot>
-  </ElCard>
+  </el-card>
 </template>
 
 <script setup lang="tsx">
-import { ElButton } from 'element-plus';
-import { ElCard } from 'element-plus';
 const emit = defineEmits(['goBack']);
 interface Prop {
   title?: string;
 }
 const props = withDefaults(defineProps<Prop>(), {
-  title: '详情'
+  title: '详情',
 });
 
 const goBack = (val: any) => {
   emit('goBack', val);
 };
-
 </script>
 
 <style lang="scss" scoped>

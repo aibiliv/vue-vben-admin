@@ -20,7 +20,7 @@
     </OperationPanel>
     <div id="table-container" class="table-container">
       <!-- 表格主体 -->
-      <ElTable
+      <el-table
         ref="table"
         :key="key"
         v-loading.lock="loading"
@@ -42,7 +42,7 @@
         @expand-change="handleExpendChange"
         @filter-change="handleFilterChange"
       >
-        <ElTableColumn
+        <el-table-column
           v-if="showSelection"
           :reserve-selection="reserveSelection"
           type="selection"
@@ -52,7 +52,7 @@
           fixed="left"
           align="center"
         />
-        <ElTableColumn
+        <el-table-column
           v-if="showIndex"
           width="65"
           fixed="left"
@@ -64,7 +64,7 @@
         <slot>
           <ColumnItem
             v-for="(item, index) in props.tableHeader.filter(
-              (res: any) => !res.hidden
+              (res: any) => !res.hidden,
             )"
             :key="index"
             :tableHeader="item.children"
@@ -79,7 +79,7 @@
             </template>
           </ColumnItem>
         </slot>
-        <ElTableColumn
+        <el-table-column
           v-if="showOperation"
           :fixed="operationFixed || undefined"
           :min-width="resizable ? operationColumnWidth : undefined"
@@ -96,16 +96,16 @@
           <template #default="scope">
             <slot name="operation" :scope="scope" />
           </template>
-        </ElTableColumn>
+        </el-table-column>
         <template #append>
           <slot name="append" />
         </template>
-      </ElTable>
+      </el-table>
       <div v-if="showPage" class="table-bottom-box">
         <span v-if="$slots.bottomBtns">
           <slot name="bottomBtns" />
         </span>
-        <ElPagination
+        <el-pagination
           v-model:currentPage="props.currentPage"
           v-model:page-size="props.pageSize"
           :page-sizes="[5, 10, 15, 20, 50, 100]"
@@ -126,20 +126,16 @@ import {
   defineComponent,
   nextTick,
   onMounted,
-  watch
-} from "vue";
-import { ElTable, ElTableColumn, ElPagination } from "element-plus";
-import ColumnItem from "./components/ColumnItem.vue";
-import OperationPanel from "./components/OperationPanel.vue";
-import type { TableHeader } from "element-plus/es/components/table/src/table-header";
-import { useElementSize, useParentElement } from "@vueuse/core";
+  watch,
+} from 'vue';
+import ColumnItem from './components/ColumnItem.vue';
+import OperationPanel from './components/OperationPanel.vue';
+import type { TableHeader } from 'element-plus/es/components/table/src/table-header';
+import { useElementSize, useParentElement } from '@vueuse/core';
 export default defineComponent({
   components: {
     OperationPanel,
-    ElTable,
-    ElTableColumn,
     ColumnItem,
-    ElPagination
   },
   props: {
     loading: { type: Boolean, default: false },
@@ -150,33 +146,33 @@ export default defineComponent({
     reserveSelection: { type: Boolean, default: false }, //是否缓存已勾选行，通常用于分页勾选，默认关闭，开启时必须指定rowKey
     showOperation: { type: Boolean, default: true }, //是否显示操作列
     defaultExpandAll: { type: Boolean, default: false }, //是否默认展开所有
-    rowKey: { type: String, default: "id" }, //每行数据的唯一标识，
+    rowKey: { type: String, default: 'id' }, //每行数据的唯一标识，
     tableData: { type: Array, default: () => [] },
     expandRow: { type: Array<any>, default: () => [] }, //展开行
     tableHeader: { type: Array, default: () => [] },
     total: { type: Number, default: 0 },
     currentPage: { type: Number, default: 1 },
     pageSize: { type: Number, default: 15 },
-    operationColumnWidth: { type: Number, default: 220 }, // 操作列宽度
-    operationColumnName: { type: String, default: "操作" }, //操作列名称
-    operationFixed: { type: String, default: "right" }, //操作列固定
+    operationColumnWidth: { type: Number, default: 200 }, // 操作列宽度
+    operationColumnName: { type: String, default: '操作' }, //操作列名称
+    operationFixed: { type: String, default: 'right' }, //操作列固定
     treeProps: {
       type: Object,
       default: () => {
-        return { hasChildren: "hasChildren", children: "children" };
-      }
+        return { hasChildren: 'hasChildren', children: 'children' };
+      },
     },
     height: { type: [String, Number], default: null },
     // maxHeight: { type: [String, Number], default: 550 },
     border: { type: Boolean, default: false },
-    size: { type: String, default: "small" },
+    size: { type: String, default: 'small' },
     resizable: { type: Boolean, default: true },
-    lazy: { type: Boolean, default: false }
+    lazy: { type: Boolean, default: false },
   },
   setup(props: any, { attrs, slots, expose, emit }) {
-    let maxHeight = ref<string | number>("580px");
+    let maxHeight = ref<string | number>('580px');
     let key = ref(1);
-    let computedSize = ref<any>("default");
+    let computedSize = ref<any>('default');
     const table = ref();
     const tableHeaderOfPermission = computed(() => {
       return props.tableHeader;
@@ -212,26 +208,26 @@ export default defineComponent({
       return type === 0;
     };
     const sizeChange = (val: number) => {
-      emit("update:current-page", 1);
-      emit("update:page-size", val);
-      emit("change-page", { page: 1, limit: val });
+      emit('update:current-page', 1);
+      emit('update:page-size', val);
+      emit('change-page', { page: 1, limit: val });
     };
     const currentChange = (val: number) => {
-      emit("update:current-page", val);
-      emit("change-page", {
+      emit('update:current-page', val);
+      emit('change-page', {
         page: val,
-        limit: props.pageSize
+        limit: props.pageSize,
       });
     };
     const changeColumn = (cols: TableHeader[]) => {
       key.value++; // 保证表格每次重新渲染
-      emit("update:tableHeader", cols);
+      emit('update:tableHeader', cols);
     };
     const handleSelectionChange = (selection: any[]) => {
-      emit("changeSelection", selection);
+      emit('changeSelection', selection);
     };
     const handleExpendChange = (row: any, expend: any) => {
-      emit("expand-change", { row, expend });
+      emit('expand-change', { row, expend });
     };
     const handleFilterChange = (filters: any[]) => {
       console.log(filters);
@@ -246,12 +242,12 @@ export default defineComponent({
 
     onMounted(() => {
       // maxHeight根据父级高度自适应
-      const box = document.querySelector("#table-container") as HTMLElement;
-      let observer = new ResizeObserver(entries => {
+      const box = document.querySelector('#table-container') as HTMLElement;
+      let observer = new ResizeObserver((entries) => {
         const entry = entries[0];
         if (entry) {
           const { contentRect } = entry;
-          maxHeight.value = contentRect.height - 80;
+          maxHeight.value = contentRect.height - 112;
         }
       });
       //@ts-ignore
@@ -274,9 +270,9 @@ export default defineComponent({
       handleExpendChange,
       handleFilterChange,
       toggleRowSelection,
-      clearSelection
+      clearSelection,
     };
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>
@@ -285,8 +281,8 @@ export default defineComponent({
   padding: 6px 20px 24px;
   flex-grow: 1;
   background: #fff;
-  border: 1px solid #ebeef5;
-  border-radius: 6px;
+  // border: 1px solid #ebeef5;
+  // border-radius: 6px;
   // overflow: hidden;
   .table-container {
     height: calc(100%);
@@ -326,7 +322,7 @@ export default defineComponent({
       border: unset;
     }
     .el-button--text:not(:nth-child(1)):before {
-      content: "";
+      content: '';
       width: 0px;
       // border-right: 1px solid var(--el-color-primary);
       opacity: 0.5;
@@ -336,9 +332,7 @@ export default defineComponent({
       cursor: not-allowed;
       pointer-events: none;
     }
-    .el-button {
-      padding: 0 5px;
-    }
+
     .el-button + .el-button {
       margin-left: 0 !important;
     }

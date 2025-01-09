@@ -193,7 +193,7 @@ const edit = (row: any) => {
 </script>
 
 <template>
-  <Page class="p-4">
+  <Page>
     <Query @search="search" @reset="reset">
       <el-form-item label="第一项">
         <el-input v-model="query.a" placeholder="请输入" />

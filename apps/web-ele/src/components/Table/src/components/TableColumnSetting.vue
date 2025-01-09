@@ -14,7 +14,7 @@
           <!-- <SvgIcon icon-class="move"></SvgIcon> -->
           <!-- <el-icon-rank /> -->
           <span class="chosen">
-            <ElCheckbox v-model="element.isShow" @change="changeCheck" />
+            <el-checkbox v-model="element.isShow" @change="changeCheck" />
           </span>
           <span class="title">{{ element.label }}</span>
         </div>
@@ -24,11 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
-import draggable from "vuedraggable";
+import { ref, watch, onMounted } from 'vue';
+import draggable from 'vuedraggable';
 // import _ from "lodash";
-import { cloneDeep as _cloneDeep } from "@pureadmin/utils";
-import { ElCheckbox } from "element-plus";
+import { cloneDeep as _cloneDeep } from '@pureadmin/utils';
 interface ColType {
   isShow?: boolean;
   hidden?: boolean;
@@ -40,15 +39,15 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits([
-  "set",
-  "changeSize",
-  "changeColumn",
-  "import",
-  "export"
+  'set',
+  'changeSize',
+  'changeColumn',
+  'import',
+  'export',
 ]);
 const showColumn = ref<ColType[]>([]);
 
-watch(props.columns, newvalue => initDsplColumns(newvalue), { deep: true });
+watch(props.columns, (newvalue) => initDsplColumns(newvalue), { deep: true });
 
 onMounted(() => {
   initDsplColumns(props.columns);
@@ -60,12 +59,12 @@ const initDsplColumns = (newVal: any[]) => {
 };
 
 const changeCheck = (e?: any) => {
-  const arr = showColumn.value.map(item => {
+  const arr = showColumn.value.map((item) => {
     if (!item.isShow) item.hidden = true;
     else item.hidden = false;
     return item;
   });
-  emit("set", arr);
+  emit('set', arr);
 };
 
 const onMove = (e: any) => {

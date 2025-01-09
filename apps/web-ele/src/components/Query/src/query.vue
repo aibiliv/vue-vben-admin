@@ -4,15 +4,14 @@
 
 <script setup lang="tsx">
 import { ref, type PropType } from 'vue';
-import { ElButton, ElCol, ElForm, ElRow, ElSpace } from "element-plus";
 
 const props = defineProps<{
-  onSearch?: () => void,
-  onReset?: () => void,
-  labelWidth?: string | number
+  onSearch?: () => void;
+  onReset?: () => void;
+  labelWidth?: string | number;
 }>();
-const slots = defineSlots()
-const emits = defineEmits(["search", "reset"]);
+const slots = defineSlots();
+const emits = defineEmits(['search', 'reset']);
 
 const count = slots.default().length;
 
@@ -23,54 +22,47 @@ const changeFold = () => {
 
 const render = () => {
   return (
-    <ElRow class="query-box">
-      <ElForm labelWidth={props.labelWidth}>
-        <ElRow gutter={16}>
-          <ElCol span={20}>
+    <el-row class="query-box">
+      <el-form labelWidth={props.labelWidth}>
+        <el-row gutter={16}>
+          <el-col span={20}>
             <div
               style={{
-                display: "grid",
+                display: 'grid',
                 gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-                gridColumnGap: "16px",
-                gridRowGap: "16px",
-                height: fold.value ? "32px" : "auto",
-                overflow: "hidden"
+                gridColumnGap: '16px',
+                gridRowGap: '16px',
+                height: fold.value ? '32px' : 'auto',
+                overflow: 'hidden',
               }}
             >
               {slots.default ? slots.default() : null}
             </div>
-          </ElCol>
-          <ElCol span={4}>
-            <ElSpace>
+          </el-col>
+          <el-col span={4}>
+            <el-space>
               {props.onSearch && (
-                <ElButton type="primary" onClick={() => emits("search")}>
+                <el-button type="primary" onClick={() => emits('search')}>
                   查询
-                </ElButton>
+                </el-button>
               )}
               {props.onReset && (
-                <ElButton
-                  type="default"
-                  onClick={() => emits("reset")}
-                >
+                <el-button type="default" onClick={() => emits('reset')}>
                   重置
-                </ElButton>
+                </el-button>
               )}
               {count > 4 && (
-                <ElButton
-                  type="primary"
-                  link
-                  onClick={changeFold}
-                >
-                  {fold.value ? "展开" : "收起"}
-                </ElButton>
+                <el-button type="primary" link onClick={changeFold}>
+                  {fold.value ? '展开' : '收起'}
+                </el-button>
               )}
-            </ElSpace>
-          </ElCol>
-        </ElRow>
-      </ElForm>
-    </ElRow>
+            </el-space>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-row>
   );
-}
+};
 </script>
 
 <style lang="scss" scoped>
